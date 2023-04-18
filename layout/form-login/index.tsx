@@ -1,6 +1,7 @@
 import { Button, Form, Input } from "antd";
 import React from "react";
 import styles from "./styles.module.scss";
+import CommonInput from "../../components/common-input";
 
 interface FormLoginProps {
   handleSubmit: (payload: any) => void;
@@ -8,23 +9,13 @@ interface FormLoginProps {
 function FormLogin({ handleSubmit }: FormLoginProps) {
   return (
     <Form onFinish={handleSubmit} className={styles.formContainerItem}>
-      <Form.Item
+      <CommonInput
         name="username"
-        rules={[
-          {
-            required: true,
-            message: "Username không được để trống",
-            whitespace: true,
-          },
-        ]}
-        wrapperCol={{ span: 24 }}
-      >
-        <Input
-          className={styles.customInputLogin}
-          placeholder="Tên tài khoản"
-          maxLength={50}
-        />
-      </Form.Item>
+        ruleMessage="Username không được để trống"
+        className={styles.customInputLogin}
+        placeholder="Tên tài khoản"
+        maxLength={50}
+      />
       <Form.Item
         name="password"
         rules={[{ required: true, message: "Password không được để trống" }]}

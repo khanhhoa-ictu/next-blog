@@ -1,0 +1,15 @@
+.rightDriver {
+    color: rgba(255, 247, 247, 1);
+    z-index: 1;
+    width: 75px;
+    height: calc(100vh - 81px);
+    overflow: hidden;
+
+    svg {
+        fill: currentColor;
+    }
+
+    @media screen and (max-width: 600px) {
+        height: 100vh;
+    }
+}
