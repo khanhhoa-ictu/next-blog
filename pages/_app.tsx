@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ConfigProvider } from "antd";
 import Header from "../layout/page-header";
+import styles from "./styles.module.scss";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,8 +20,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ConfigProvider>
-        <Header />
-        <Component {...pageProps} />
+        <div className={styles.pageWrapper}>
+          <div className={styles.mainWrapper}>
+            <Header />
+            <div className={styles.pageContent}>
+              <Component {...pageProps} />
+            </div>
+          </div>
+        </div>
       </ConfigProvider>
     </QueryClientProvider>
   );
