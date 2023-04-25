@@ -48,7 +48,6 @@ function ListMenu() {
       </Menu.Item>
     </Menu>
   );
-  console.log(router.pathname == "/");
   return (
     <div className={styles.listMenu}>
       <ul>

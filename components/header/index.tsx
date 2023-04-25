@@ -52,7 +52,7 @@ function Header() {
               <Dropdown overlay={menu} trigger={["click"]}>
                 <div className={styles.avatar}>
                   <Image
-                    src={profile.avatar || noAvatar}
+                    src={profile?.avatar || noAvatar}
                     alt=""
                     height={30}
                     width={30}

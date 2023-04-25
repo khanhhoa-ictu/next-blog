@@ -1,0 +1,16 @@
+.articleContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
+
+}
+
+.listArticle {
+    margin-top: 70px;
+    width: 1200px;
+
+    @media screen and (max-width: 1200px) {
+        width: 90%;
+    }
+}

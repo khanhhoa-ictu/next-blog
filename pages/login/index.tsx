@@ -42,7 +42,6 @@ export default function Login() {
       handleErrorMessage(error);
     }
   };
-
   return (
     <div className={styles.loginContainer}>
       <div className={styles.wrapperLogin}>
