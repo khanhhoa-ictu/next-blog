@@ -7,13 +7,7 @@ interface AuthProps {
   children: any;
 }
 function Auth({ children }: AuthProps) {
-  const router = useRouter();
-  const isAuthenticated = !!Cookies.get("token");
-  const { profile, firstLoading } = useProfile(true);
-  useEffect(() => {
-    console.log(profile?.username);
-    if (!firstLoading && !profile?.username) router.push("/login");
-  }, [profile, router]);
+  const { profile } = useProfile(true);
 
   return <div>{children}</div>;
 }

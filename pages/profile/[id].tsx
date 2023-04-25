@@ -19,6 +19,7 @@ import bg from "../../assets/profile/bg.jpg";
 import classNames from "classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Auth from "../../layout/auth";
 interface ParamTypes {
   id: string;
 }
@@ -88,109 +89,113 @@ function Profile() {
   };
 
   return (
-    <div className={styles.container}>
-      {!profileById && <Loading />}
-      <section className={styles.section}>
-        <div className={styles.leaves}>
-          <div className={styles.set}>
-            <div>
-              <Image src={leaf_01} alt="" width={79} height={38} />
-            </div>
-            <div>
-              <Image src={leaf_02} alt="" width={65} height={58} />
-            </div>
-            <div>
-              <Image src={leaf_03} alt="" width={60} height={43} />
-            </div>
-            <div>
-              <Image src={leaf_04} alt="" width={68} height={40} />
+    <Auth>
+      <div className={styles.container}>
+        {!profileById && <Loading />}
+        <section className={styles.section}>
+          <div className={styles.leaves}>
+            <div className={styles.set}>
+              <div>
+                <Image src={leaf_01} alt="" width={79} height={38} />
+              </div>
+              <div>
+                <Image src={leaf_02} alt="" width={65} height={58} />
+              </div>
+              <div>
+                <Image src={leaf_03} alt="" width={60} height={43} />
+              </div>
+              <div>
+                <Image src={leaf_04} alt="" width={68} height={40} />
+              </div>
             </div>
           </div>
-        </div>
-        <Image
-          src={bg}
-          className={styles.bg}
-          alt=""
-          width={1920}
-          height={1080}
-        />
-        <Image
-          src={girl}
-          className={styles.girl}
-          alt=""
-          width={476}
-          height={539}
-        />
-        <div className={styles.profile}>
-          <div className={styles.info}>
-            <div className={styles.infoContainer}>
-              <p className={styles.name}>{profileById?.username}</p>
+          <Image
+            src={bg}
+            className={styles.bg}
+            alt=""
+            width={1920}
+            height={1080}
+          />
+          <Image
+            src={girl}
+            className={styles.girl}
+            alt=""
+            width={476}
+            height={539}
+          />
+          <div className={styles.profile}>
+            <div className={styles.info}>
+              <div className={styles.infoContainer}>
+                <p className={styles.name}>{profileById?.username}</p>
 
-              <div className={styles.avatar}>
-                <div className={styles.img}>
-                  <Image
-                    src={profileById?.avatar ? profileById?.avatar : noAvatar}
-                    alt=""
-                    width={150}
-                    height={150}
-                  />
+                <div className={styles.avatar}>
+                  <div className={styles.img}>
+                    <Image
+                      src={profileById?.avatar ? profileById?.avatar : noAvatar}
+                      alt=""
+                      width={150}
+                      height={150}
+                    />
+                  </div>
                 </div>
+
+                {profile?.id === Number(id) && (
+                  <span
+                    className={classNames(styles.address, styles.update)}
+                    onClick={() =>
+                      setIsOpenModal({ ...isOpenModal, detail: true })
+                    }
+                  >
+                    thay đổi
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className={styles.content}>
+              <h3 className={styles.details}>Giới thiệu</h3>
+
+              <div className={styles.description}>
+                <p className={styles.aboutContent}>{profileById?.about}</p>
               </div>
 
               {profile?.id === Number(id) && (
-                <span
-                  className={classNames(styles.address, styles.update)}
+                <p
+                  className={styles.update}
                   onClick={() =>
-                    setIsOpenModal({ ...isOpenModal, detail: true })
+                    setIsOpenModal({ ...isOpenModal, about: true })
                   }
                 >
                   thay đổi
-                </span>
+                </p>
               )}
             </div>
           </div>
-          <div className={styles.content}>
-            <h3 className={styles.details}>Giới thiệu</h3>
+        </section>
 
-            <div className={styles.description}>
-              <p className={styles.aboutContent}>{profileById?.about}</p>
-            </div>
+        <CustomModal
+          isOpen={isOpenModal.about}
+          handleOk={handleOkConfirmAbout}
+          handleCancel={handleCancelAbout}
+          title={"About me"}
+        >
+          <AboutMe aboutMe={profileById?.about} changeAbout={changeAbout} />
+        </CustomModal>
 
-            {profile?.id === Number(id) && (
-              <p
-                className={styles.update}
-                onClick={() => setIsOpenModal({ ...isOpenModal, about: true })}
-              >
-                thay đổi
-              </p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <CustomModal
-        isOpen={isOpenModal.about}
-        handleOk={handleOkConfirmAbout}
-        handleCancel={handleCancelAbout}
-        title={"About me"}
-      >
-        <AboutMe aboutMe={profileById?.about} changeAbout={changeAbout} />
-      </CustomModal>
-
-      <CustomModal
-        isOpen={isOpenModal.detail}
-        handleOk={handleOkConfirm}
-        handleCancel={handleCancelDetail}
-        title={""}
-      >
-        <Detail
-          form={form}
-          detail={profile}
-          profile={profileById}
-          refetchProfileById={async () => await refetch()}
-        />
-      </CustomModal>
-    </div>
+        <CustomModal
+          isOpen={isOpenModal.detail}
+          handleOk={handleOkConfirm}
+          handleCancel={handleCancelDetail}
+          title={""}
+        >
+          <Detail
+            form={form}
+            detail={profile}
+            profile={profileById}
+            refetchProfileById={async () => await refetch()}
+          />
+        </CustomModal>
+      </div>
+    </Auth>
   );
 }
 
