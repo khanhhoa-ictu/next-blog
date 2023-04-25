@@ -13,3 +13,11 @@ export const handleErrorMessage = (error: any) => {
 export const getErrorMessage = (error: any) => {
   return error?.response?.data?.msg || "Something went wrong!";
 };
+
+export const convertImages = (htmlText: string) =>
+  htmlText.replace(
+    /<div style="text-align:none;"><img/g,
+    '<div style="text-align:center;"><img'
+  );
+
+export const imgMaxSize = 5000000;

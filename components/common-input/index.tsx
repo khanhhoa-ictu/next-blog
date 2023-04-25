@@ -7,6 +7,7 @@ interface CommonInputProps {
   className: string;
   placeholder?: string;
   maxLength: number;
+  type?: string;
 }
 function CommonInput({
   name,
@@ -14,6 +15,7 @@ function CommonInput({
   className,
   placeholder = "",
   maxLength,
+  type = "text",
   ...props
 }: CommonInputProps) {
   return (
@@ -29,6 +31,7 @@ function CommonInput({
       {...props}
     >
       <Input
+        type={type}
         className={className}
         placeholder={placeholder}
         maxLength={maxLength}

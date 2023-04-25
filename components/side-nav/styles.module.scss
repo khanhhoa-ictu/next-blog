@@ -1,0 +1,72 @@
+.sideNav {
+    background: #fff;
+    border-right: 1px solid #f0f0f0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    height: 100vh;
+
+    :global {
+
+        .ant-menu-inline,
+        .ant-menu-vertical,
+        .ant-menu-vertical-left {
+            border: none;
+        }
+
+        .ant-menu-item {
+            height: 50px;
+
+            a {
+                &:hover {
+                    color: #23815d;
+                }
+            }
+
+            &:hover {
+                color: #23815d;
+            }
+
+            &::after {
+                border-right: 4px solid #23815d;
+            }
+        }
+
+        .ant-menu-item-selected a {
+            color: #23815d;
+        }
+
+        .ant-menu-item-selected {
+            background: #e6fff3;
+        }
+
+        .anticon {
+            width: 12px;
+        }
+
+        .ant-menu-item-selected {
+            .anticon {
+                color: #23815d;
+
+            }
+        }
+    }
+
+    .logo {
+        display: block;
+        height: 76px;
+        width: 100%;
+        font-size: 20px;
+        font-weight: bold;
+        color: #3c8e6f !important;
+        padding: 20px;
+    }
+}
+
+.sideNavCollapsed {
+    .logo {
+        font-size: 12px;
+    }
+}

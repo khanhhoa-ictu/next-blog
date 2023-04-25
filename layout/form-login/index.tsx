@@ -25,6 +25,7 @@ function FormLogin({ handleSubmit }: FormLoginProps) {
         className={styles.customInputLogin}
         placeholder="Mật khẩu"
         maxLength={50}
+        type="password"
       />
 
       <CommonButtonSubmit className={styles.btnLogin} text="Đăng nhập" />

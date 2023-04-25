@@ -7,5 +7,6 @@ export default function useProfile(enabled = false) {
     getProfile,
     { enabled }
   );
-  return { profile, refetchProfile };
+  const firstLoading = profile === undefined;
+  return { profile, refetchProfile, firstLoading };
 }
