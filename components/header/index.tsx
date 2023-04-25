@@ -15,7 +15,10 @@ function Header() {
   const logout = () => {
     Cookies.remove("token");
     Cookies.remove("refreshToken");
-    window.location.reload();
+
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
   const { profile } = useProfile();
   const menu = (
@@ -38,7 +41,7 @@ function Header() {
     <div className={styles.header}>
       <div className={styles.logo}>
         <Link href="/">
-          <Image src={logo} alt="logo" />
+          <Image src={logo} alt="logo" width={600} height={480} />
         </Link>
       </div>
       <ListMenu />
@@ -48,7 +51,12 @@ function Header() {
             <div className={styles.menuControlItem}>
               <Dropdown overlay={menu} trigger={["click"]}>
                 <div className={styles.avatar}>
-                  <Image src={profile.avatar || noAvatar} alt="" />
+                  <Image
+                    src={profile.avatar || noAvatar}
+                    alt=""
+                    height={30}
+                    width={30}
+                  />
                 </div>
               </Dropdown>
             </div>

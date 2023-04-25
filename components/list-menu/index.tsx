@@ -10,15 +10,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./styles.module.scss";
 
-// import { NavLink, useHistory, useLocation } from 'react-router-dom';
-
 function ListMenu() {
   const router = useRouter();
-  //   const location = useLocation();
-  //   const history = useHistory();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { setCategory } = useCategory();
-  const { data, refetch } = useQuery("get-category", getListCategory);
+  const { data } = useQuery("get-category", getListCategory);
   const handleMenu = (value: number) => {
     const newCategory = {
       category: value,
@@ -52,12 +48,17 @@ function ListMenu() {
       </Menu.Item>
     </Menu>
   );
-
+  console.log(router.pathname == "/");
   return (
     <div className={styles.listMenu}>
       <ul>
-        <li className={router.pathname == "/" ? `${styles.active}` : ""}>
-          <Link href="/">HOME</Link>
+        <li>
+          <Link
+            href="/"
+            className={router.pathname == "/" ? `${styles.active}` : ""}
+          >
+            HOME
+          </Link>
         </li>
         <li>
           <div
@@ -95,9 +96,10 @@ function ListMenu() {
         isOpen={isOpenModal}
         handleOk={() => setIsOpenModal(false)}
         handleCancel={() => setIsOpenModal(false)}
-        children={"Khóa học sẽ được ra mắt vào tháng 8/2023"}
         title={"Khóa học"}
-      />
+      >
+        Khóa học sẽ được ra mắt vào tháng 8/2023{" "}
+      </CustomModal>
     </div>
   );
 }

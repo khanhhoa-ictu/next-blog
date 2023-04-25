@@ -11,11 +11,12 @@ import FormLogin from "../../layout/form-login";
 import { ILogin } from "../../types/userType";
 import { handleErrorMessage } from "./../../helper";
 import styles from "./style.module.scss";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
-  //   const isAuthenticated = !!Cookies.get("token");
-  //   if (isAuthenticated) return router.push("/");
+  const isAuthenticated = !!Cookies.get("token");
+  if (isAuthenticated) router.push("/");
 
   const handleSubmit = async (payload: ILogin) => {
     const params = _.pick(payload, ["username", "password"]);
@@ -48,7 +49,7 @@ export default function Login() {
         <div className={styles.formContainer}>
           <Card bordered className={styles.loginForm}>
             <Row justify="center" className={styles.formTitle}>
-              <img src={`${logo}`} alt="" />
+              <Image src={logo} alt="" width={598} height={182} />
               <h3>we are laugh</h3>
             </Row>
             <FormLogin handleSubmit={handleSubmit} />
@@ -67,7 +68,7 @@ export default function Login() {
         <RightDriver />
       </div>
       <div className={styles.wrapperImage}>
-        <img src={`${logoLogin}`} alt="" />
+        <Image src={logoLogin} alt="" />
       </div>
     </div>
   );

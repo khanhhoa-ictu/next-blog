@@ -2,11 +2,11 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import configs from "../config";
+
 const axiosInstance = Axios.create({
   timeout: 10000,
   baseURL: configs.API_DOMAIN,
 });
-
 axiosInstance.interceptors.request.use(
   (config) => {
     // eslint-disable-next-line no-param-reassign
