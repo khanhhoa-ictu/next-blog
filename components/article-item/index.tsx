@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { IPost } from "../../types/managerType";
 import styles from "./style.module.scss";
 import Link from "next/link";
@@ -20,7 +21,7 @@ function Article(props: ArticleProps) {
         </div>
 
         <div className={styles.articleImg}>
-          <img src={item.thumbnail} alt="" />
+          <Image src={item.thumbnail} alt="" width={428} height={315} />
         </div>
       </div>
     </div>

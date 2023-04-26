@@ -12,6 +12,7 @@ import TextArea from "antd/lib/input/TextArea";
 import Loading from "components/loading";
 import { IAbout } from "types/managerType";
 import Auth from "layout/auth";
+import Image from "next/image";
 
 function AboutSetting() {
   const Ref = useRef<any>(null);
@@ -72,7 +73,12 @@ function AboutSetting() {
           <div className={styles.aboutContainer}>
             <div className={styles.avatar}>
               <div className={styles.img}>
-                <img src={data?.thumbnail || noAvatar} alt="" />
+                <Image
+                  src={data?.thumbnail || noAvatar}
+                  alt=""
+                  width={120}
+                  height={120}
+                />
                 <div
                   className={styles.changeImage}
                   onClick={() => Ref.current.click()}

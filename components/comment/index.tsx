@@ -129,9 +129,10 @@ function Comment(props: CommentProps) {
         isOpen={isOpenModal}
         handleOk={handleOk}
         handleCancel={() => setIsOpenModal(false)}
-        children={"Bạn có muốn xóa bình luận không"}
         title={"Bình luận"}
-      />
+      >
+        Bạn có muốn xóa bình luận không
+      </CustomModal>
     </div>
   );
 }

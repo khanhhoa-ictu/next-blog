@@ -1,11 +1,8 @@
-import { Input, Modal, Select } from "antd";
+import { Form, Input, Modal, Select } from "antd";
+import { useForm } from "antd/lib/form/Form";
 import TextArea from "antd/lib/input/TextArea";
-import { convertToRaw, EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertImages } from "../../helper";
-import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { IPost } from "../../types/managerType";
-import Editors from "../../components/editor";
 import styles from "./style.module.scss";
 interface AddPostProps {
   isModalVisible: boolean;
@@ -14,79 +11,68 @@ interface AddPostProps {
 }
 const { Option } = Select;
 function AddPost(props: AddPostProps) {
+  const TextEditor = dynamic(() => import("components/text-editor"), {
+    ssr: false,
+  });
+  const [form] = useForm();
   const { isModalVisible, handleOk, handleCancel } = props;
-  const [editorState, setEditorState] = useState<any>(
-    EditorState.createEmpty()
-  );
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [summary, setSummary] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
-  const [category, setCategory] = useState(1);
-  const onEditorStateChange = (value: any) => {
-    const html = draftToHtml(convertToRaw(value.getCurrentContent()));
-    setContent(convertImages(html));
-    setEditorState(value);
+  const onChangeEditor = (event: any, editor: any) => {
+    const data = editor.getData();
+    form.setFieldsValue({
+      content: data,
+    });
   };
   const handleCancelModal = () => {
-    setEditorState("");
     handleCancel();
   };
-  const handleOkModal = () => {
-    const data = {
-      title,
-      content,
-      summary,
-      thumbnail,
-      category_id: category,
-    };
-    handleOk(data);
+  const handleSubmit = (payload: any) => {
+    handleOk(payload);
   };
+
   return (
     <Modal
       title="Add post"
       visible={isModalVisible}
-      onOk={handleOkModal}
+      onOk={() => form.submit()}
       onCancel={handleCancelModal}
       wrapClassName={styles.wrapperModal}
     >
-      <div className={styles.fromItem}>
-        <label>tiêu đề</label>
-        <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-      </div>
-      <div className={styles.fromItem}>
-        <label>Nội dung bài viết</label>
-        <Editors
-          editorState={editorState}
-          onEditorStateChange={onEditorStateChange}
-        />
-      </div>
-      <div className={styles.fromItem}>
-        <label>Nội dung tóm tắt</label>
-        <TextArea
-          value={summary}
-          onChange={(e) => setSummary(e.target.value)}
-        />
-      </div>
-      <div className={styles.fromItem}>
-        <label>thumbnail</label>
-        <Input
-          type="text"
-          value={thumbnail}
-          onChange={(e) => setThumbnail(e.target.value)}
-        />
-      </div>
-      <div className={styles.fromItem}>
-        <label>thể loại</label>
-        <Select
-          defaultValue={category}
-          onChange={(value) => setCategory(value)}
-        >
-          <Option value={1}>html-css</Option>
-          <Option value={2}>javascript</Option>
-          <Option value={3}>reactJs</Option>
-        </Select>
-      </div>
+      <Form form={form} onFinish={handleSubmit}>
+        <div className={styles.fromItem}>
+          <label>tiêu đề</label>
+          <Form.Item name="title">
+            <Input />
+          </Form.Item>
+        </div>
+        <div className={styles.fromItem}>
+          <label>Nội dung bài viết</label>
+          <Form.Item name="content">
+            <TextEditor onChange={onChangeEditor} />
+          </Form.Item>
+        </div>
+        <div className={styles.fromItem}>
+          <label>Nội dung tóm tắt</label>
+          <Form.Item name="summary">
+            <TextArea />
+          </Form.Item>
+        </div>
+        <div className={styles.fromItem}>
+          <label>thumbnail</label>
+          <Form.Item name="thumbnail">
+            <Input type="text" />
+          </Form.Item>
+        </div>
+        <div className={styles.fromItem}>
+          <label>thể loại</label>
+          <Form.Item name="category_id">
+            <Select>
+              <Option value={1}>html-css</Option>
+              <Option value={2}>javascript</Option>
+              <Option value={3}>reactJs</Option>
+            </Select>
+          </Form.Item>
+        </div>
+      </Form>
     </Modal>
   );
 }

@@ -121,35 +121,33 @@ function Category() {
           isOpen={isOpenModal.delete}
           handleOk={handleOkDelete}
           handleCancel={() => setIsOpenModal({ ...isOpenModal, delete: false })}
-          children={"Bạn có muốn xóa bài viết không"}
           title={"Xóa danh mục"}
-        />
+        >
+          Bạn có muốn xóa bài viết không
+        </CustomModal>
 
         <CustomModal
           isOpen={isOpenModal.add}
           handleOk={handleOkAdd}
           handleCancel={() => handleCloseAdd("add")}
-          children={
-            <Input
-              value={titleAdd}
-              onChange={(e) => setTitleAdd(e.target.value)}
-            />
-          }
           title={"Thêm danh mục"}
-        />
-
+        >
+          <Input
+            value={titleAdd}
+            onChange={(e) => setTitleAdd(e.target.value)}
+          />
+        </CustomModal>
         <CustomModal
           isOpen={isOpenModal.edit}
           handleOk={handleOkEdit}
           handleCancel={() => handleCloseAdd("edit")}
-          children={
-            <Input
-              value={titleAdd}
-              onChange={(e) => setTitleAdd(e.target.value)}
-            />
-          }
           title={"Sửa danh mục"}
-        />
+        >
+          <Input
+            value={titleAdd}
+            onChange={(e) => setTitleAdd(e.target.value)}
+          />
+        </CustomModal>
       </div>
     </Auth>
   );

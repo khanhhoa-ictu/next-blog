@@ -132,9 +132,10 @@ function Post() {
           isOpen={isOpenModal.delete}
           handleOk={handleOkDelete}
           handleCancel={() => setIsOpenModal({ ...isOpenModal, delete: false })}
-          children={"Bạn có muốn xóa bài viết không"}
           title={"Xóa bài viết"}
-        />
+        >
+          Bạn có muốn xóa bài viết không
+        </CustomModal>
       </div>
     </Auth>
   );
