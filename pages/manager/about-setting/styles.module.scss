@@ -1,0 +1,56 @@
+.aboutContainer {
+    padding: 20px 40px 40px 40px;
+
+    .avatar {
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            position: relative;
+
+            &:hover {
+                .changeImage {
+                    opacity: 1;
+                    transition: opacity 0.4s ease-in-out;
+                }
+            }
+
+            .changeImage {
+                cursor: pointer;
+                opacity: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 100%;
+                background-color: #3b3b3b33;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: opacity 0.4s ease-in-out;
+
+                span {
+                    font-size: 26px;
+                    color: #fff;
+                }
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+
+            .file {
+                display: none;
+            }
+        }
+    }
+}

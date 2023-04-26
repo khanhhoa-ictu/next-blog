@@ -1,0 +1,29 @@
+.textEditor {
+    min-height: 180px;
+
+    :global {
+        .todo-list__label__description {
+            margin-left: 25px;
+        }
+
+        .ck-content .todo-list .todo-list__label>input {
+            left: 0;
+            margin-right: 5px;
+        }
+
+        .ck-content {
+            overflow-y: auto;
+            max-height: 450px;
+            min-height: 250px;
+
+            @media only screen and (max-width: 650px) {
+                max-height: 200px;
+                min-height: 150px;
+            }
+
+            p {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
