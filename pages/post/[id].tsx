@@ -5,15 +5,15 @@ import {
   deleteComment,
   getComment,
   getPostDetail,
-} from "../../api-client/post-detail";
-import Loading from "../../components/loading";
-import { checkScript, handleErrorMessage } from "../../helper";
-import useProfile from "../../hooks/useProfile";
+} from "api-client/post-detail";
+import Loading from "components/loading";
+import { checkScript, handleErrorMessage } from "helper";
+import useProfile from "hooks/useProfile";
 import moment from "moment";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { IComment } from "../../types/postType";
-import Comment from "../../components/comment";
+import { IComment } from "types/postType";
+import Comment from "components/comment";
 import styles from "./style.module.scss";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";

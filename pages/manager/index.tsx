@@ -8,6 +8,7 @@ import React from "react";
 import { IDashCount } from "../../types/managerType";
 import DashCount from "../../components/dash-count";
 import styles from "./style.module.scss";
+import Auth from "layout/auth";
 
 function Manager() {
   const listDash = [
@@ -38,14 +39,16 @@ function Manager() {
   ];
 
   return (
-    <div className={styles.manager}>
-      <div className={styles.dashCount}>
-        {listDash.map((item: IDashCount, key) => {
-          return <DashCount item={item} key={key} />;
-        })}
+    <Auth>
+      <div className={styles.manager}>
+        <div className={styles.dashCount}>
+          {listDash.map((item: IDashCount, key) => {
+            return <DashCount item={item} key={key} />;
+          })}
+        </div>
+        <div className={styles.hotPost}></div>
       </div>
-      <div className={styles.hotPost}></div>
-    </div>
+    </Auth>
   );
 }
 
