@@ -12,6 +12,7 @@ import AddPost from "layout/add-post";
 import EditPost from "layout/edit-post";
 import styles from "./style.module.scss";
 import Auth from "layout/auth";
+import { isArray } from "lodash";
 
 function Post() {
   const [isOpenModal, setIsOpenModal] = useState({
@@ -42,7 +43,8 @@ function Post() {
   };
 
   const handleOkEdit = async (data: IPost) => {
-    const newData = { ...data, id: id };
+    let newData = { ...data, id: id };
+
     try {
       setLoading(true);
       await editPost(newData);

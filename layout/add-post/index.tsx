@@ -63,6 +63,13 @@ function AddPost(props: AddPostProps) {
           </Form.Item>
         </div>
         <div className={styles.fromItem}>
+          <label>slug</label>
+          <Form.Item name="slug">
+            <Input type="text" />
+          </Form.Item>
+        </div>
+
+        <div className={styles.fromItem}>
           <label>thể loại</label>
           <Form.Item name="category_id">
             <Select>
