@@ -16,13 +16,13 @@ function HomeItem(props: HomeItemProps) {
   return (
     <div className={styles.articleItem}>
       <div className={styles.postImg}>
-        <Link href={`/post/${item.id}`} className={styles.navLink}>
+        <Link href={`/post/${item.slug}`} className={styles.navLink}>
           <Image src={item.thumbnail} alt="" width={1280} height={680} />
         </Link>
       </div>
       <div className={styles.postContent}>
         <div className={styles.title}>
-          <Link href={`/post/${item.id}`} className={styles.navLinkContent}>
+          <Link href={`/post/${item.slug}`} className={styles.navLinkContent}>
             <h3> {item.title} </h3>
           </Link>
           <View icon={<EyeOutlined />} view={item?.view} />
@@ -32,7 +32,7 @@ function HomeItem(props: HomeItemProps) {
         </div>
         <Button
           className={styles.more}
-          onClick={() => router.push(`/post/${item.id}`)}
+          onClick={() => router.push(`/post/${item.slug}`)}
         >
           Xem Thêm
         </Button>

@@ -1,7 +1,8 @@
 import { IAddComment, IAddReply } from "../types/postType";
 import { sendDelete, sendGet, sendPost } from "./axios";
 
-export const getPostDetail = (id: number) => sendGet(`/getPostDetail/${id}`);
+export const getPostDetail = (slug: string) =>
+  sendGet(`/getPostDetail/${slug}`);
 
 export const getComment = (id: number) => sendGet(`/comment/${id}`);
 

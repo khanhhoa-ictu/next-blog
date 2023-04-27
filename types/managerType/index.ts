@@ -12,6 +12,7 @@ export interface IPost {
   id?: string;
   category_id?: number;
   view?: number;
+  slug: string;
 }
 
 export interface IAbout {

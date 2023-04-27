@@ -17,27 +17,28 @@ import Comment from "components/comment";
 import styles from "./style.module.scss";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
-interface ParamTypes {
-  id: string;
-}
 
 function PostDetail() {
   const router = useRouter();
-  const { id } = router.query;
+  const { slug } = router.query;
+  console.log("first");
   const { data: postDetail, isFetching: fetchPostDetail } = useQuery(
     "postDetail",
-    () => getPostDetail(Number(id))
+    () => getPostDetail(String(slug))
   );
-  const { data: comment, refetch: fetchComment } = useQuery("getComment", () =>
-    getComment(Number(id))
+  const { data: comment, refetch: fetchComment } = useQuery(
+    "getComment",
+    () => getComment(Number(postDetail?.id)),
+    { enabled: !!postDetail }
   );
+  console.log(comment);
   const [commentUser, setContentUser] = useState("");
   const { profile } = useProfile();
 
   const handleSubmitComment = async () => {
     const newComment = {
       user_id: profile?.id,
-      post_id: id,
+      post_id: postDetail?.id,
       content: commentUser.trim(),
     };
     if (!profile?.id) {
@@ -57,7 +58,7 @@ function PostDetail() {
       return;
     }
     try {
-      // await addComment(newComment);
+      await addComment(newComment);
       fetchComment();
     } catch (error) {
       handleErrorMessage(error);
