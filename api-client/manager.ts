@@ -8,6 +8,8 @@ export const addPost = (payload: IPost) =>
 
 export const getPost = () => sendGet("/manager/getPost");
 
+export const getPostAlls = () => sendGet("/post/getAllPost");
+
 export const deletePost = (id: number) => sendDelete(`manager/delete/${id}`);
 
 export const getPostByCategory = (category: ICategory) =>

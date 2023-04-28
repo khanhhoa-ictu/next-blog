@@ -8,11 +8,16 @@ import React from "react";
 import { useQuery } from "react-query";
 import { IPost } from "../../types/managerType";
 import styles from "./style.module.scss";
+import { CATEGORY } from "common";
 
-function Article() {
+function Article({ post }: any) {
   const { category, setCategory } = useCategory();
-  const { data, isFetching } = useQuery(["getPost", category], () =>
-    getPostByCategory(category)
+  const { data, isFetching } = useQuery(
+    ["getPost", category],
+    () => getPostByCategory(category),
+    {
+      initialData: post,
+    }
   );
   if (isFetching) {
     return <Loading />;
@@ -40,3 +45,21 @@ function Article() {
 }
 
 export default Article;
+
+export async function getStaticProps() {
+  try {
+    const post = await getPostByCategory({
+      category: CATEGORY.HTML_CSS,
+      page: 1,
+    });
+    return {
+      props: {
+        post,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {},
+    };
+  }
+}

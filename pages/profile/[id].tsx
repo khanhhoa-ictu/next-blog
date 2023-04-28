@@ -20,9 +20,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Auth from "../../layout/auth";
-interface ParamTypes {
-  id: string;
-}
+import { GetStaticPropsContext } from "next";
 
 function Profile() {
   const [isOpenModal, setIsOpenModal] = useState({
@@ -200,3 +198,9 @@ function Profile() {
 }
 
 export default Profile;
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  return {
+    props: {},
+  };
+}

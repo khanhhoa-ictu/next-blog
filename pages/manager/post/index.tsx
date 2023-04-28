@@ -31,7 +31,6 @@ function Post() {
     "listStaffAll",
     () => getPost()
   );
-
   const handleOkAdd = async (data: IPost) => {
     try {
       await addPost(data);

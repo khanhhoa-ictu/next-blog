@@ -1,37 +1,32 @@
 import { Button, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { getPostAlls } from "api-client/manager";
 import {
   addComment,
   deleteComment,
   getComment,
   getPostDetail,
 } from "api-client/post-detail";
+import Comment from "components/comment";
 import Loading from "components/loading";
+import Seo from "components/seo";
+import configs from "config";
 import { checkScript, handleErrorMessage } from "helper";
 import useProfile from "hooks/useProfile";
+import { isEmpty } from "lodash";
 import moment from "moment";
-import React, { useState } from "react";
+import { GetStaticPropsContext } from "next";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { IComment } from "types/postType";
-import Comment from "components/comment";
 import styles from "./style.module.scss";
-import { isEmpty } from "lodash";
-import { useRouter } from "next/router";
 
-function PostDetail() {
-  const router = useRouter();
-  const { slug } = router.query;
-  console.log("first");
-  const { data: postDetail, isFetching: fetchPostDetail } = useQuery(
-    "postDetail",
-    () => getPostDetail(String(slug))
-  );
+function PostDetail({ postDetail }: any) {
   const { data: comment, refetch: fetchComment } = useQuery(
     "getComment",
     () => getComment(Number(postDetail?.id)),
     { enabled: !!postDetail }
   );
-  console.log(comment);
   const [commentUser, setContentUser] = useState("");
   const { profile } = useProfile();
 
@@ -74,12 +69,19 @@ function PostDetail() {
       handleErrorMessage(error);
     }
   };
-  if (fetchPostDetail) {
+  if (!postDetail) {
     return <Loading />;
   }
-
   return (
     <div className={styles.container}>
+      <Seo
+        data={{
+          title: `${postDetail?.title} | Smile blog`,
+          url: `${configs?.HOST_URL}/post/${postDetail?.slug}`,
+          thumbnail: postDetail?.thumbnail,
+          description: postDetail?.summary,
+        }}
+      />
       <div className={styles.containerDetail}>
         <div className={styles.detail}>
           <div className={styles.dateTime}>
@@ -127,3 +129,31 @@ function PostDetail() {
 }
 
 export default PostDetail;
+
+export async function getStaticPaths() {
+  try {
+    const listPost = await getPostAlls();
+    const listSlug = listPost?.map((item: any) => ({
+      params: { slug: item?.slug },
+    }));
+    return { paths: listSlug, fallback: false };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: false,
+    };
+  }
+}
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  try {
+    const postDetail = await getPostDetail(String(context.params?.slug));
+    return {
+      props: {
+        postDetail,
+      },
+    };
+  } catch (error) {
+    return { props: {} };
+  }
+}

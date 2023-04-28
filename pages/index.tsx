@@ -1,21 +1,20 @@
 import { Pagination } from "antd";
+import { isEmpty } from "lodash";
+import { GetStaticPropsContext } from "next";
+import { useState } from "react";
+import { useQuery } from "react-query";
 import { getPostAll } from "../api-client/home";
 import Carouse from "../components/carousel";
 import HomeItem from "../components/home-item";
 import Loading from "../components/loading";
-import { isEmpty } from "lodash";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import Seo from "../components/seo";
+import Auth from "../layout/auth";
 import { IPost } from "../types/managerType";
 import styles from "./styles.module.scss";
-import Cookies from "js-cookie";
-import useProfile from "../hooks/useProfile";
-import Auth from "../layout/auth";
-import Seo from "../components/seo";
 const initPage = {
   page: 1,
 };
-function Home() {
+function Home({ listPost }: any) {
   const [page, setPage] = useState(initPage);
   const { data: listPostAll, isFetching: isFetchingPostAll } = useQuery(
     ["listPostAll", page],
@@ -59,7 +58,7 @@ function Home() {
             {isEmpty(listPostAll?.listPost) ? null : (
               <Pagination
                 current={page.page}
-                total={listPostAll.total}
+                total={10}
                 onChange={handleChangePage}
                 pageSize={10}
               />
@@ -72,3 +71,9 @@ function Home() {
 }
 
 export default Home;
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  return {
+    props: {},
+  };
+}

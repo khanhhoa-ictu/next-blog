@@ -62,7 +62,6 @@ function AboutSetting() {
   };
   useEffect(() => {
     if (!data) return;
-    console.log(data);
     form.setFieldsValue(data);
   }, [data]);
   return (
