@@ -1,0 +1,110 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+
+    @media screen and (max-width: 600px) {
+        height: auto;
+
+    }
+
+    .aboutInner {
+        margin-top: 70px;
+        width: 1200px;
+        z-index: 9;
+
+        @media screen and (max-width: 1200px) {
+            width: 92%;
+        }
+
+        .aboutContent {
+            border: 5px solid #607027;
+            width: 100%;
+            padding: 0 70px 80px;
+            display: flex;
+            border-radius: 10px;
+
+            @media screen and (max-width: 999px) {
+                padding: 0 30px 40px;
+            }
+
+            @media screen and (max-width: 777px) {
+                flex-direction: column;
+            }
+
+            .thumb {
+                width: 370px;
+                height: 500px;
+                margin-right: 55px;
+                margin-top: -155px;
+                flex: none;
+
+                @media screen and (max-width: 999px) {
+                    width: 300px;
+                    height: 400px;
+                    margin-right: 25px;
+                }
+
+                @media screen and (max-width: 777px) {
+                    margin-top: 40px;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 6px;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+    .textContent {
+        padding-top: 60px;
+
+        h3 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #fff;
+            font-family: 'Literata', serif;
+
+            @media screen and (max-width: 1200px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        .aboutBio {
+            font-family: 'Literata', serif;
+            font-size: 15px;
+            color: #fff;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .aboutSocial {
+            display: flex;
+            justify-content: flex-end;
+
+            li {
+                list-style: none;
+                padding: 0 16px;
+                cursor: pointer;
+
+                a {
+                    color: #fff;
+                    font-size: 24px;
+
+                    &:hover {
+                        opacity: 0.6;
+                    }
+                }
+            }
+        }
+
+    }
+
+}

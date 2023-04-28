@@ -1,0 +1,69 @@
+.modalCustom {
+    min-width: 550px !important;
+    font-family: "Noto Sans JP";
+
+    :global {
+        .ant-modal-content {
+            border-radius: 10px;
+        }
+
+        .ant-modal-header {
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .ant-modal-footer {
+            border-top: none;
+            text-align: center;
+            padding-bottom: 20px;
+
+            .ant-btn {
+                width: 130px;
+                margin-left: 20px;
+                border-radius: 4px;
+            }
+
+            .ant-btn-primary {
+                background-color: #3b65e2;
+                color: #fff;
+                font-weight: bold;
+                font-size: 12px;
+            }
+
+            .ant-btn-default {
+                border: 1px solid #3b65e2;
+                color: #3b65e2;
+                font-weight: bold;
+                font-size: 12px;
+            }
+        }
+
+        .ant-modal-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
+            margin-left: 20px;
+        }
+
+        .ant-modal-body {
+            text-align: center;
+            padding: 10px 24px 30px 24px;
+
+            textarea.ant-input {
+                min-height: 250px;
+            }
+
+            .ant-input {
+
+                border-radius: 4px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 560px) {
+        min-width: 350px !important;
+    }
+}

@@ -1,0 +1,32 @@
+.wrapperModal {
+    :global {
+        .ant-modal {
+            width: 80% !important;
+            border-radius: 6px;
+
+            .ant-modal-content {
+                border-radius: 8px;
+            }
+
+            .ant-modal-header {
+                border-radius: 8px 8px 0 0
+            }
+
+            .ant-modal-body {
+
+                .DraftEditor-editorContainer {
+                    min-height: 400px;
+                }
+
+                .rdw-editor-wrapper {
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+
+                .public-DraftEditor-content {
+                    padding: 0 10px;
+                }
+            }
+        }
+    }
+}

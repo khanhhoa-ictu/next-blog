@@ -1,0 +1,11 @@
+.forgotPassword {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: calc(100vh - 81px);
+
+    @media screen and (max-width: 600) {
+        height: 100vh;
+    }
+}
