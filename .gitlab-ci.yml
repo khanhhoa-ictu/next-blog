@@ -33,6 +33,6 @@ DeployDev:
 
     - CI= && yarn run build
 
-    - rsync --progress -avzh -e "ssh " --rsync-path="sudo rsync" --exclude=".git" . "$SERVER_NAME"@"$SERVER_IP":~/nextjs-base
+    - rsync --progress -avzh -e "ssh " --rsync-path="sudo rsync" --exclude=".git" . "$SERVER_NAME"@"$SERVER_IP":~/blog
 
-    - ssh "$SERVER_NAME"@"$SERVER_IP" "cd ~/nextjs-base && pm2 reload nextjs-base --update-env && pm2 save"
+    - ssh "$SERVER_NAME"@"$SERVER_IP" "cd ~/blog && pm2 reload blog --update-env && pm2 save"
