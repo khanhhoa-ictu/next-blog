@@ -45,7 +45,7 @@ function Home({ listPost }: any) {
       <div className={styles.container}>
         <div className={styles.homeContainer}>
           <div className={styles.carousel}>
-            <Carouse />
+            {/* <Carouse /> */}
           </div>
           <div className={styles.articleContainer}>
             <div className={styles.listArticle}>
