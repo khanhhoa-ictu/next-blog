@@ -7,7 +7,6 @@ import SideNav from "../components/side-nav";
 import Header from "../layout/page-header";
 import "../styles/index.scss";
 import styles from "./styles.module.scss";
-import Auth from "../layout/auth";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
