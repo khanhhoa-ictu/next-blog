@@ -13,7 +13,7 @@ function Article(props: ArticleProps) {
       <div className={styles.articleContent}>
         <div className={styles.post}>
           <div className={styles.articleTitle}>
-            <Link href={`/post/${item.id}`}>{item.title}</Link>
+            <Link href={`/post/${item?.slug}`}>{item.title}</Link>
           </div>
           <div>
             <p className={styles.postText}>{item.summary}</p>
