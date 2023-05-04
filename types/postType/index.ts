@@ -34,3 +34,5 @@ export interface IAddReply {
   comment_id: number;
   user_id: number;
 }
+
+export interface IPsotDetail {}

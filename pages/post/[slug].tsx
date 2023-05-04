@@ -15,13 +15,14 @@ import { checkScript, handleErrorMessage } from "helper";
 import useProfile from "hooks/useProfile";
 import { isEmpty } from "lodash";
 import moment from "moment";
-import { GetStaticPropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { IComment } from "types/postType";
+import { IAddComment, IComment } from "types/postType";
 import styles from "./style.module.scss";
+import { IPost, IPostDetail } from "types/managerType";
 
-function PostDetail({ postDetail }: any) {
+function PostDetail({ postDetail }: IPostDetail) {
   const { data: comment, refetch: fetchComment } = useQuery(
     "getComment",
     () => getComment(Number(postDetail?.id)),
@@ -31,7 +32,8 @@ function PostDetail({ postDetail }: any) {
   const { profile } = useProfile();
 
   const handleSubmitComment = async () => {
-    const newComment = {
+    if (!postDetail?.id) return;
+    const newComment: IAddComment = {
       user_id: profile?.id,
       post_id: postDetail?.id,
       content: commentUser.trim(),
@@ -130,24 +132,9 @@ function PostDetail({ postDetail }: any) {
 
 export default PostDetail;
 
-export async function getStaticPaths() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
-    const listPost = await getPostAlls();
-    const listSlug = listPost?.map((item: any) => ({
-      params: { slug: item?.slug },
-    }));
-    return { paths: listSlug, fallback: false };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: false,
-    };
-  }
-}
-
-export async function getStaticProps(context: GetStaticPropsContext) {
-  try {
-    const postDetail = await getPostDetail(String(context.params?.slug));
+    const postDetail: IPost = await getPostDetail(String(context?.query?.slug));
     return {
       props: {
         postDetail,
