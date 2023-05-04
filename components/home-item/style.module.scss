@@ -2,12 +2,14 @@
     display: flex;
     padding-bottom: 20px;
     border-bottom: 1px solid #60702742;
-    margin-bottom: 20px;
-
+    margin-bottom: 80px;
+    box-shadow: 10px 10px 0px 0px #50c297;
+    border: 4px solid #50c297;
+    border-radius: 6px;
     .postImg {
         width: calc(40% - 100px);
         height: 420px;
-        margin: 0 30px 50px 50px;
+        margin: 30px 40px 10px 40px;
         position: relative;
         background: transparent;
         min-width: 350px;
@@ -22,18 +24,18 @@
             display: none;
         }
 
-        &::before {
-            content: "";
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            display: block;
-            background-color: #50c297;
-            left: -10px;
-            bottom: -10px;
-            z-index: -1;
-            border-radius: 6px;
-        }
+        // &::before {
+        //     content: "";
+        //     position: absolute;
+        //     height: 100%;
+        //     width: 100%;
+        //     display: block;
+        //     background-color: #50c297;
+        //     left: -10px;
+        //     bottom: -10px;
+        //     z-index: -1;
+        //     border-radius: 6px;
+        // }
 
         .navLink {
             img {
@@ -46,11 +48,11 @@
                 bottom: 0px;
                 transition: all 0.4s ease-in-out;
 
-                &:hover {
-                    left: 10px;
-                    bottom: 10px;
-                    transition: all 0.4s ease-in-out;
-                }
+                // &:hover {
+                //     left: 10px;
+                //     bottom: 10px;
+                //     transition: all 0.4s ease-in-out;
+                // }
             }
         }
     }
@@ -140,10 +142,12 @@
             font-weight: 500;
             height: auto;
             border-radius: 4px;
-
+            transition: all 0.4s;
             &:hover {
-                color: #50c297;
                 border-color: #c3e05a;
+                color: #fff;
+                background-color: #50c297;
+                transition: all 0.4s;
             }
 
             @media screen and (max-width: 992px) {
