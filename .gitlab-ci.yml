@@ -7,7 +7,7 @@ stages:
 BuildDev:
 stage: build
 only:
-- develop
+- main
 before_script:
 - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 - cp $DEV_ENV .env
@@ -15,17 +15,17 @@ script:
 - >
 DOCKER_BUILDKIT=1 docker build
 --build-arg BUILDKIT_INLINE_CACHE=1
---cache-from $CI_REGISTRY_IMAGE:develop
---tag $CI_REGISTRY_IMAGE:develop
+--cache-from $CI_REGISTRY_IMAGE:main
+--tag $CI_REGISTRY_IMAGE:main
 .
 after_script:
-- docker push $CI_REGISTRY_IMAGE:develop
+- docker push $CI_REGISTRY_IMAGE:main
 DeployDev:
 stage: deploy
 needs:
 - BuildDev
 only:
-- develop
+- main
 before_script:
 - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y)'
 - eval $(ssh-agent -s)
@@ -38,9 +38,9 @@ script:
 - >
 ssh $SERVER_NAME@$SERVER_IP
 "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
-cd ~/blog && docker pull ${CI_REGISTRY_IMAGE}:develop;
+cd ~/blog && docker pull ${CI_REGISTRY_IMAGE}:main;
 docker rm -f blog || true;
-docker run -d -p 3000:3000 --name blog --env-file .env ${CI_REGISTRY_IMAGE}:develop;
+docker run -d -p 3000:3000 --name blog --env-file .env ${CI_REGISTRY_IMAGE}:main;
 docker image prune -f;"
 
 
