@@ -1,38 +1,84 @@
+image: docker:20.10.12
+services:
+- docker:20.10.12-dind
 stages:
-  - DeployDev
-
-cache:
-  key: $CI_COMMIT_REF_SLUG
-
-  paths:
-    - node_modules/
-
-    - .next/cache/
-
+- build
+- deploy
+BuildDev:
+stage: build
+only:
+- main
+before_script:
+- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+- cp $DEV_ENV .env
+script:
+- >
+DOCKER_BUILDKIT=1 docker build
+--build-arg BUILDKIT_INLINE_CACHE=1
+--cache-from $CI_REGISTRY_IMAGE:main
+--tag $CI_REGISTRY_IMAGE:main
+.
+after_script:
+- docker push $CI_REGISTRY_IMAGE:main
 DeployDev:
-  stage: DeployDev
+stage: deploy
+needs:
+- BuildDev
+only:
+- main
+before_script:
+- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y)'
+- eval $(ssh-agent -s)
+- echo "$SSH_KEY_DEV" | ssh-add -
+- mkdir -p ~/.ssh
+- ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
+- chmod 600 ~/.ssh/known_hosts
+script:
+- scp $DEV_ENV $SERVER_NAME@$SERVER_IP:~/blog/.env
+- >
+ssh $SERVER_NAME@$SERVER_IP
+"docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+cd ~/blog && docker pull ${CI_REGISTRY_IMAGE}:main;
+docker rm -f blog || true;
+docker run -d -p 3000:3000 --name blog --env-file .env ${CI_REGISTRY_IMAGE}:main;
+docker image prune -f;"
 
-  image: node:18.12.1
 
-  only: ["main"]
+# stages:
+#   - DeployDev
 
-  script:
-    - apt-get update && apt-get install rsync -y && apt-get install openssh-server -y
+# cache:
+#   key: $CI_COMMIT_REF_SLUG
 
-    - mkdir -p ~/.ssh
+#   paths:
+#     - node_modules/
 
-    - ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
+#     - .next/cache/
 
-    - echo "$SSH_KEY_DEV" > ~/.ssh/id_rsa
+# DeployDev:
+#   stage: DeployDev
 
-    - chmod 700 ~/.ssh/id_rsa
+#   image: node:18.12.1
 
-    - echo "$DEV_ENV" > .env
+#   only: ["main"]
 
-    - yarn install
+#   script:
+#     - apt-get update && apt-get install rsync -y && apt-get install openssh-server -y
 
-    - CI= && yarn run build
+#     - mkdir -p ~/.ssh
 
-    - rsync --progress -avzh -e "ssh " --rsync-path="sudo rsync" --exclude=".git" . "$SERVER_NAME"@"$SERVER_IP":~/blog
+#     - ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
-    - ssh "$SERVER_NAME"@"$SERVER_IP" "cd ~/blog && pm2 reload blog --update-env && pm2 save"
+#     - echo "$SSH_KEY_DEV" > ~/.ssh/id_rsa
+
+#     - chmod 700 ~/.ssh/id_rsa
+
+#     - echo "$DEV_ENV" > .env
+
+#     - yarn install
+
+#     - CI= && yarn run build
+
+#     - rsync --progress -avzh -e "ssh " --rsync-path="sudo rsync" --exclude=".git" . "$SERVER_NAME"@"$SERVER_IP":~/blog
+
+#     - ssh "$SERVER_NAME"@"$SERVER_IP" "cd ~/blog && pm2 reload blog --update-env && pm2 save"
