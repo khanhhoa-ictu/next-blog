@@ -1,48 +1,47 @@
 image: docker:20.10.12
 services:
-- docker:20.10.12-dind
+  - docker:20.10.12-dind
 stages:
-- build
-- deploy
+  - build
+  - deploy
 BuildDev:
-stage: build
-only:
-- main
-before_script:
-- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-- cp $DEV_ENV .env
-script:
-- >
-DOCKER_BUILDKIT=1 docker build
---build-arg BUILDKIT_INLINE_CACHE=1
---cache-from $CI_REGISTRY_IMAGE:main
---tag $CI_REGISTRY_IMAGE:main
-.
-after_script:
-- docker push $CI_REGISTRY_IMAGE:main
+  stage: build
+  only:
+    - main
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cp $DEV_ENV .env
+  script:
+    - >
+      DOCKER_BUILDKIT=1 docker build
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      --cache-from $CI_REGISTRY_IMAGE:main
+      --tag $CI_REGISTRY_IMAGE:main
+      .
+  after_script:
+    - docker push $CI_REGISTRY_IMAGE:main
 DeployDev:
-stage: deploy
-needs:
-- BuildDev
-only:
-- main
-before_script:
-- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y)'
-- eval $(ssh-agent -s)
-- echo "$SSH_KEY_DEV" | ssh-add -
-- mkdir -p ~/.ssh
-- ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
-- chmod 600 ~/.ssh/known_hosts
-script:
-- scp $DEV_ENV $SERVER_NAME@$SERVER_IP:~/blog/.env
-- >
-ssh $SERVER_NAME@$SERVER_IP
-"docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
-cd ~/blog && docker pull ${CI_REGISTRY_IMAGE}:main;
-docker rm -f blog || true;
-docker run -d -p 3000:3000 --name blog --env-file .env ${CI_REGISTRY_IMAGE}:main;
-docker image prune -f;"
-
+  stage: deploy
+  needs:
+    - BuildDev
+  only:
+    - main
+  before_script:
+    - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y)"
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY_DEV" | ssh-add -
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
+    - chmod 600 ~/.ssh/known_hosts
+  script:
+    - scp $DEV_ENV $SERVER_NAME@$SERVER_IP:~/blog/.env
+    - >
+      ssh $SERVER_NAME@$SERVER_IP 
+      "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+      cd ~/blog && docker pull ${CI_REGISTRY_IMAGE}:main;
+      docker rm -f blog || true;
+      docker run -d -p 3000:3000 --name blog --env-file .env ${CI_REGISTRY_IMAGE}:main;
+      docker image prune -f;"
 
 # stages:
 #   - DeployDev
