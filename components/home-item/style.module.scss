@@ -1,11 +1,9 @@
 .articleItem {
     display: flex;
     padding-bottom: 20px;
-    border-bottom: 1px solid #60702742;
+    border-bottom: 2px solid #60702742;
     margin-bottom: 80px;
-    box-shadow: 10px 10px 0px 0px #50c297;
-    border: 4px solid #50c297;
-    border-radius: 6px;
+
     .postImg {
         width: calc(40% - 100px);
         height: 420px;
@@ -66,6 +64,30 @@
             margin-bottom: 32px;
             font-family: 'Literata', serif;
 
+            .date {
+                display: flex;
+                align-items: center;
+                color: #727272;
+                font-size: 16px;
+
+                p {
+                    margin-bottom: 0;
+                    margin-right: 8px;
+                }
+
+                .dateItem {
+                    display: flex;
+                    align-items: center;
+
+                    span {
+                        margin-right: 8px;
+                        display: inline-block;
+                        font-weight: bold;
+                        color: #50c297;
+                    }
+                }
+            }
+
             a {
 
                 font-size: 26px;
@@ -99,7 +121,7 @@
 
                 p {
                     margin-bottom: 0;
-                    margin-left: 12px;
+                    margin-left: 8px;
 
                 }
 
@@ -143,6 +165,7 @@
             height: auto;
             border-radius: 4px;
             transition: all 0.4s;
+
             &:hover {
                 border-color: #c3e05a;
                 color: #fff;

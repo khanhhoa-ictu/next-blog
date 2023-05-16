@@ -7,12 +7,14 @@ import View from "./view";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
+import moment from "moment";
 interface HomeItemProps {
   item: IPost;
 }
 function HomeItem(props: HomeItemProps) {
   const router = useRouter();
   const { item } = props;
+  console.log(item);
   return (
     <div className={styles.articleItem}>
       <div className={styles.postImg}>
@@ -25,7 +27,18 @@ function HomeItem(props: HomeItemProps) {
           <Link href={`/post/${item.slug}`} className={styles.navLinkContent}>
             <h3> {item.title} </h3>
           </Link>
-          <View icon={<EyeOutlined />} view={item?.view} />
+          <div className={styles.date}>
+            <div className={styles.dateItem}>
+              <p>Smile</p>
+              <span>-</span>
+            </div>
+            <div className={styles.dateItem}>
+              <p>{moment(item?.reg_date).format("YYYY/MM/DD")}</p>
+              <span>-</span>
+            </div>
+
+            <View icon={<EyeOutlined />} view={item?.view} />
+          </div>
         </div>
         <div className={styles.content}>
           <p>{item.summary}</p>
