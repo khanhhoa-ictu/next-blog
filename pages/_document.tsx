@@ -10,8 +10,11 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-        <link rel="shortcut icon" href="/static/favicon.ico" />
-          
+          <link
+            rel="shortcut icon"
+            href="https://res.cloudinary.com/smile159/image/upload/v1684290119/xstdnmstjmullzobn99k.ico"
+          />
+
           <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap"
             rel="stylesheet"
@@ -24,7 +27,6 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200;0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;0,7..72,900;1,7..72,200;1,7..72,300;1,7..72,400;1,7..72,500;1,7..72,600;1,7..72,700;1,7..72,800;1,7..72,900&display=swap"
             rel="stylesheet"
           />
-
         </Head>
         <body>
           <Main />
