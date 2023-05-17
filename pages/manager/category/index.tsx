@@ -5,14 +5,14 @@ import {
   handleDeleteCategory,
   handleEditCategory,
 } from "api-client/manager";
-import Loading from "components/loading";
 import CustomModal from "components/custom-modal";
 import TableCustom from "components/custom-table";
+import Loading from "components/loading";
 import { handleErrorMessage } from "helper";
-import React, { useState } from "react";
+import Authen from "layout/auth/Authen";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import styles from "./style.module.scss";
-import Auth from "layout/auth";
 function Category() {
   const [loading, setLoading] = useState(false);
   const { data, refetch } = useQuery("get-category", getListCategory);
@@ -101,7 +101,7 @@ function Category() {
   };
 
   return (
-    <Auth>
+    <Authen>
       <div className="manager">
         {loading && <Loading />}
         <div className="container-manager">
@@ -149,7 +149,7 @@ function Category() {
           />
         </CustomModal>
       </div>
-    </Auth>
+    </Authen>
   );
 }
 

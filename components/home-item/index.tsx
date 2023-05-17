@@ -14,7 +14,6 @@ interface HomeItemProps {
 function HomeItem(props: HomeItemProps) {
   const router = useRouter();
   const { item } = props;
-  console.log(item);
   return (
     <div className={styles.articleItem}>
       <div className={styles.postImg}>

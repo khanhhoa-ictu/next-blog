@@ -1,18 +1,17 @@
 import { Button } from "antd";
 import { addPost, deletePost, editPost, getPost } from "api-client/manager";
-import Loading from "components/loading";
 import CustomModal from "components/custom-modal";
+import Loading from "components/loading";
 
 import TableCustom from "components/custom-table";
 import { handleErrorMessage } from "helper";
-import React, { useState } from "react";
+import AddPost from "layout/add-post";
+import Authen from "layout/auth/Authen";
+import EditPost from "layout/edit-post";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { IPost } from "types/managerType";
-import AddPost from "layout/add-post";
-import EditPost from "layout/edit-post";
 import styles from "./style.module.scss";
-import Auth from "layout/auth";
-import { isArray } from "lodash";
 
 function Post() {
   const [isOpenModal, setIsOpenModal] = useState({
@@ -98,7 +97,7 @@ function Post() {
     }
   };
   return (
-    <Auth>
+    <Authen>
       <div className="manager">
         {loading && <Loading />}
         <div className="container-manager">
@@ -138,7 +137,7 @@ function Post() {
           Bạn có muốn xóa bài viết không
         </CustomModal>
       </div>
-    </Auth>
+    </Authen>
   );
 }
 

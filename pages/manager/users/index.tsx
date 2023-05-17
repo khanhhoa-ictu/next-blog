@@ -1,11 +1,10 @@
 import { Button } from "antd";
 import { deleteUser, getUser } from "api-client/user";
-import Loading from "components/loading";
 import TableCustom from "components/custom-table";
-import React from "react";
+import Loading from "components/loading";
+import Authen from "layout/auth/Authen";
 import { useQuery } from "react-query";
 import styles from "./style.module.scss";
-import Auth from "layout/auth";
 
 function User() {
   const { data, isFetching, refetch } = useQuery("getUser", () => getUser());
@@ -45,7 +44,7 @@ function User() {
     return <Loading />;
   }
   return (
-    <Auth>
+    <Authen>
       <div className="manager">
         <div className="container-manager">
           <div className={styles.postContainer}>
@@ -56,7 +55,7 @@ function User() {
           </div>
         </div>
       </div>
-    </Auth>
+    </Authen>
   );
 }
 
