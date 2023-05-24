@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import useProfile from "../../hooks/useProfile";
-import { useQueryClient } from "react-query";
 
 interface AuthProps {
-  children: any;
+  children: ReactNode;
 }
 function Auth({ children }: AuthProps) {
   const router = useRouter();

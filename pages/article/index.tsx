@@ -9,7 +9,8 @@ import { useQuery } from "react-query";
 import { IPost } from "../../types/managerType";
 import styles from "./style.module.scss";
 import { CATEGORY } from "common";
-
+import noData from "assets/images/nodata.png";
+import Image from "next/image";
 function Article({ post }: any) {
   const { category, setCategory } = useCategory();
   const { data, isFetching } = useQuery(
@@ -27,18 +28,24 @@ function Article({ post }: any) {
   };
   return (
     <div className={styles.articleContainer}>
-      <div className={styles.listArticle}>
-        {data?.post?.map((item: IPost) => (
-          <ArticleItem item={item} key={item?.id} />
-        ))}
-      </div>
-      {isEmpty(data?.post) ? null : (
-        <Pagination
-          current={category.page}
-          total={data?.total}
-          onChange={handleChangePage}
-          pageSize={10}
-        />
+      {isEmpty(data?.post) ? (
+        <Image src={noData} alt="no-data" className={styles.noData} />
+      ) : (
+        <>
+          <div className={styles.listArticle}>
+            {data?.post?.map((item: IPost) => (
+              <ArticleItem item={item} key={item?.id} />
+            ))}
+          </div>
+          {isEmpty(data?.post) ? null : (
+            <Pagination
+              current={category.page}
+              total={data?.total}
+              onChange={handleChangePage}
+              pageSize={10}
+            />
+          )}
+        </>
       )}
     </div>
   );
