@@ -20,7 +20,7 @@ function AboutMe({ about }: any) {
   }
   return (
     <>
-      <Particle />
+      {/* <Particle /> */}
       <div className={styles.container}>
         <div className={styles.aboutInner}>
           <div className={styles.aboutContent}>

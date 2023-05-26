@@ -3,9 +3,10 @@
     justify-content: center;
     align-items: center;
     height: calc(100vh - 100px);
+    background-color: #000;
 
     @media screen and (max-width: 600px) {
-        height: auto;
+        height: 100vh;
 
     }
 
@@ -17,13 +18,16 @@
         @media screen and (max-width: 1200px) {
             width: 92%;
         }
-
+        @media screen and (max-width: 600px) {
+            margin-top: 0;
+        }
         .aboutContent {
             border: 5px solid #607027;
             width: 100%;
             padding: 0 30px 40px;
             display: flex;
             border-radius: 10px;
+            position: relative;
 
             @media screen and (max-width: 999px) {
                 padding: 0 30px 40px;
@@ -31,6 +35,7 @@
 
             @media screen and (max-width: 777px) {
                 flex-direction: column;
+                
             }
 
             .thumb {
@@ -64,7 +69,7 @@
 
     .textContent {
         padding-top: 60px;
-        position: relative;
+
         h3 {
             font-size: 2rem;
             margin-bottom: 25px;
@@ -78,7 +83,7 @@
         }
 
         .aboutBio {
-    
+
             font-family: 'Literata', serif;
             font-size: 15px;
             color: #fff;
@@ -89,9 +94,10 @@
         .aboutSocial {
             display: flex;
             justify-content: flex-end;
-        position: absolute;
+            position: absolute;
             bottom: 0;
             right: 0;
+
             li {
                 list-style: none;
                 padding: 0 16px;

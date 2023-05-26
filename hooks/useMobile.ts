@@ -11,14 +11,15 @@ export default function useIsMobile() {
     return isMobile;
   });
 
+  const listenerScreen = () => {
+    let isMobiles = true;
+    if (typeof window !== "undefined") {
+      isMobiles = window.innerWidth <= 600 ? true : false;
+    }
+    queryClient.setQueryData("is_mobile", isMobiles);
+  };
+
   useEffect(() => {
-    const listenerScreen = () => {
-      let isMobiles = true;
-      if (typeof window !== "undefined") {
-        isMobiles = window.innerWidth <= 600 ? true : false;
-      }
-      queryClient.setQueryData("is_mobile", isMobile);
-    };
     if (typeof window !== "undefined") {
       window.addEventListener("resize", listenerScreen);
     }

@@ -11,6 +11,11 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          />
+
+          <link
             rel="shortcut icon"
             href="https://res.cloudinary.com/smile159/image/upload/v1684290119/xstdnmstjmullzobn99k.ico"
           />
