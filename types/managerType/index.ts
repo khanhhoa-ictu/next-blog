@@ -14,6 +14,7 @@ export interface IPost {
   view?: number;
   slug: string;
   reg_date?: string;
+  error?: string;
 }
 export interface IPostDetail {
   postDetail: IPost;

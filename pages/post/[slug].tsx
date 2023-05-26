@@ -21,8 +21,10 @@ import { useQuery } from "react-query";
 import { IAddComment, IComment } from "types/postType";
 import styles from "./style.module.scss";
 import { IPost, IPostDetail } from "types/managerType";
+import NoData from "components/no-data";
 
-function PostDetail({ postDetail }: IPostDetail) {
+function PostDetail(props: any) {
+  const { postDetail } = props;
   const { data: comment, refetch: fetchComment } = useQuery(
     "getComment",
     () => getComment(Number(postDetail?.id)),
@@ -71,11 +73,12 @@ function PostDetail({ postDetail }: IPostDetail) {
       handleErrorMessage(error);
     }
   };
-  if (!postDetail) {
-    return <Loading />;
+  if (props?.error) {
+    return <NoData />;
   }
   return (
     <div className={styles.container}>
+      {!postDetail && <Loading />}
       <Seo
         data={{
           title: `${postDetail?.title} | Smile blog`,
@@ -135,12 +138,17 @@ export default PostDetail;
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
     const postDetail: IPost = await getPostDetail(String(context?.query?.slug));
+    if (!postDetail) {
+      return {
+        props: { error: "error" },
+      };
+    }
     return {
       props: {
         postDetail,
       },
     };
   } catch (error) {
-    return { props: {} };
+    return { props: { error: "error" } };
   }
 }

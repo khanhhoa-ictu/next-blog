@@ -1,16 +1,14 @@
 import { Pagination } from "antd";
+import { CATEGORY } from "common";
+import NoData from "components/no-data";
+import { isEmpty } from "lodash";
+import { useQuery } from "react-query";
 import { getPostByCategory } from "../../api-client/manager";
 import ArticleItem from "../../components/article-item";
 import Loading from "../../components/loading";
 import useCategory from "../../hooks/useCategory";
-import { isEmpty } from "lodash";
-import React from "react";
-import { useQuery } from "react-query";
 import { IPost } from "../../types/managerType";
 import styles from "./style.module.scss";
-import { CATEGORY } from "common";
-import noData from "assets/images/nodata.png";
-import Image from "next/image";
 function Article({ post }: any) {
   const { category, setCategory } = useCategory();
   const { data, isFetching } = useQuery(
@@ -29,7 +27,7 @@ function Article({ post }: any) {
   return (
     <div className={styles.articleContainer}>
       {isEmpty(data?.post) ? (
-        <Image src={noData} alt="no-data" className={styles.noData} />
+        <NoData />
       ) : (
         <>
           <div className={styles.listArticle}>

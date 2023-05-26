@@ -1,26 +1,26 @@
 import { Form, message } from "antd";
+import classNames from "classnames";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useQuery } from "react-query";
 import { getProfileById, setProfileAbout } from "../../api-client/profile";
 import noAvatar from "../../assets/images/no-avatar.png";
-import Loading from "../../components/loading";
-import CustomModal from "../../components/custom-modal";
-import { handleErrorMessage } from "../../helper";
-import useProfile from "../../hooks/useProfile";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import AboutMe from "../../components/about-me";
-import Detail from "../../components/detail-profile";
-import styles from "./style.module.scss";
+import bg from "../../assets/profile/bg.jpg";
 import girl from "../../assets/profile/girl.png";
 import leaf_01 from "../../assets/profile/leaf_01.png";
 import leaf_02 from "../../assets/profile/leaf_02.png";
 import leaf_03 from "../../assets/profile/leaf_03.png";
 import leaf_04 from "../../assets/profile/leaf_04.png";
-import bg from "../../assets/profile/bg.jpg";
-import classNames from "classnames";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import AboutMe from "../../components/about-me";
+import CustomModal from "../../components/custom-modal";
+import Detail from "../../components/detail-profile";
+import Loading from "../../components/loading";
+import { handleErrorMessage } from "../../helper";
+import useProfile from "../../hooks/useProfile";
 import Auth from "../../layout/auth";
-import { GetStaticPropsContext } from "next";
+import styles from "./style.module.scss";
+import NoData from "components/no-data";
 
 function Profile() {
   const [isOpenModal, setIsOpenModal] = useState({
@@ -31,7 +31,11 @@ function Profile() {
   const { profile } = useProfile();
   const router = useRouter();
   const { id } = router.query;
-  const { data: profileById, refetch } = useQuery(
+  const {
+    data: profileById,
+    refetch,
+    error,
+  } = useQuery(
     ["fetchProfileById", id],
     () => {
       if (isNaN(Number(id))) return;
@@ -85,7 +89,10 @@ function Profile() {
     setAboutMe({ ...aboutMe, about: profileById?.about });
     setIsOpenModal({ ...isOpenModal, about: false });
   };
-
+  console.log(error);
+  if (error) {
+    return <NoData />;
+  }
   return (
     <Auth>
       <div className={styles.container}>
