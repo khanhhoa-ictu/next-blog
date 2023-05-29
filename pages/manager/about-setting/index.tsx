@@ -1,18 +1,18 @@
-import { Button, Form, message } from "antd";
-import Input from "antd/lib/input/Input";
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./styles.module.scss";
-import noAvatar from "assets/images/no-avatar.png";
 import { UploadOutlined } from "@ant-design/icons";
-import { handleErrorMessage, imgMaxSize } from "helper";
-import { useQuery } from "react-query";
-import { getAbout, getEditAbout, setAvatarAbout } from "api-client/about";
+import { Button, Form, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import Input from "antd/lib/input/Input";
 import TextArea from "antd/lib/input/TextArea";
+import { getAbout, getEditAbout, setAvatarAbout } from "api-client/about";
+import noAvatar from "assets/images/no-avatar.png";
 import Loading from "components/loading";
-import { IAbout } from "types/managerType";
-import Auth from "layout/auth";
+import { handleErrorMessage, imgMaxSize } from "helper";
+import Authen from "layout/auth/Authen";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { useQuery } from "react-query";
+import { IAbout } from "types/managerType";
+import styles from "./styles.module.scss";
 
 function AboutSetting() {
   const Ref = useRef<any>(null);
@@ -62,11 +62,10 @@ function AboutSetting() {
   };
   useEffect(() => {
     if (!data) return;
-    console.log(data);
     form.setFieldsValue(data);
   }, [data]);
   return (
-    <Auth>
+    <Authen>
       <div className="manager">
         {loading && <Loading />}
         <div className="container-manager">
@@ -130,7 +129,7 @@ function AboutSetting() {
           </div>
         </div>
       </div>
-    </Auth>
+    </Authen>
   );
 }
 

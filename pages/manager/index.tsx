@@ -4,11 +4,11 @@ import {
   LikeOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import React from "react";
-import { IDashCount } from "../../types/managerType";
+import Seo from "components/seo";
+import Authen from "layout/auth/Authen";
 import DashCount from "../../components/dash-count";
+import { IDashCount } from "../../types/managerType";
 import styles from "./style.module.scss";
-import Auth from "layout/auth";
 
 function Manager() {
   const listDash = [
@@ -39,7 +39,16 @@ function Manager() {
   ];
 
   return (
-    <Auth>
+    <Authen>
+      <Seo
+        data={{
+          title: "sdassada",
+          url: "smile123.site",
+          thumbnail:
+            "https://res.cloudinary.com/smile159/image/upload/v1682320712/lqgujsjlifs0lzyco58s.png",
+          description: "share articles about ReactJS",
+        }}
+      />
       <div className={styles.manager}>
         <div className={styles.dashCount}>
           {listDash.map((item: IDashCount, key) => {
@@ -48,7 +57,7 @@ function Manager() {
         </div>
         <div className={styles.hotPost}></div>
       </div>
-    </Auth>
+    </Authen>
   );
 }
 

@@ -12,6 +12,8 @@ import { ILogin } from "../../types/userType";
 import { handleErrorMessage } from "./../../helper";
 import styles from "./style.module.scss";
 import Image from "next/image";
+import Seo from "components/seo";
+import configs from "config";
 
 export default function Login() {
   const router = useRouter();
@@ -44,6 +46,15 @@ export default function Login() {
   };
   return (
     <div className={styles.loginContainer}>
+      <Seo
+        data={{
+          title: `Smile blog | Login `,
+          url: `${configs?.HOST_URL}/login`,
+          thumbnail:
+            "https://res.cloudinary.com/smile159/image/upload/v1682320712/lqgujsjlifs0lzyco58s.png",
+          description: "login to website Smile blog",
+        }}
+      />
       <div className={styles.wrapperLogin}>
         <div className={styles.formContainer}>
           <Card bordered className={styles.loginForm}>

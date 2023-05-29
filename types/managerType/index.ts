@@ -13,8 +13,12 @@ export interface IPost {
   category_id?: number;
   view?: number;
   slug: string;
+  reg_date?: string;
+  error?: string;
 }
-
+export interface IPostDetail {
+  postDetail: IPost;
+}
 export interface IAbout {
   content: string;
   facebook: string;

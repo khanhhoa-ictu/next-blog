@@ -1,42 +1,41 @@
 import { Button, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { getPostAlls } from "api-client/manager";
 import {
   addComment,
   deleteComment,
   getComment,
   getPostDetail,
 } from "api-client/post-detail";
+import Comment from "components/comment";
 import Loading from "components/loading";
+import Seo from "components/seo";
+import configs from "config";
 import { checkScript, handleErrorMessage } from "helper";
 import useProfile from "hooks/useProfile";
-import moment from "moment";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { IComment } from "types/postType";
-import Comment from "components/comment";
-import styles from "./style.module.scss";
 import { isEmpty } from "lodash";
-import { useRouter } from "next/router";
+import moment from "moment";
+import { GetServerSidePropsContext } from "next";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { IAddComment, IComment } from "types/postType";
+import styles from "./style.module.scss";
+import { IPost, IPostDetail } from "types/managerType";
+import NoData from "components/no-data";
 
-function PostDetail() {
-  const router = useRouter();
-  const { slug } = router.query;
-  console.log("first");
-  const { data: postDetail, isFetching: fetchPostDetail } = useQuery(
-    "postDetail",
-    () => getPostDetail(String(slug))
-  );
+function PostDetail(props: any) {
+  const { postDetail } = props;
   const { data: comment, refetch: fetchComment } = useQuery(
     "getComment",
     () => getComment(Number(postDetail?.id)),
     { enabled: !!postDetail }
   );
-  console.log(comment);
   const [commentUser, setContentUser] = useState("");
   const { profile } = useProfile();
 
   const handleSubmitComment = async () => {
-    const newComment = {
+    if (!postDetail?.id) return;
+    const newComment: IAddComment = {
       user_id: profile?.id,
       post_id: postDetail?.id,
       content: commentUser.trim(),
@@ -74,12 +73,20 @@ function PostDetail() {
       handleErrorMessage(error);
     }
   };
-  if (fetchPostDetail) {
-    return <Loading />;
+  if (props?.error) {
+    return <NoData />;
   }
-
   return (
     <div className={styles.container}>
+      {!postDetail && <Loading />}
+      <Seo
+        data={{
+          title: `${postDetail?.title} | Smile blog`,
+          url: `${configs?.HOST_URL}/post/${postDetail?.slug}`,
+          thumbnail: postDetail?.thumbnail,
+          description: postDetail?.summary,
+        }}
+      />
       <div className={styles.containerDetail}>
         <div className={styles.detail}>
           <div className={styles.dateTime}>
@@ -127,3 +134,21 @@ function PostDetail() {
 }
 
 export default PostDetail;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  try {
+    const postDetail: IPost = await getPostDetail(String(context?.query?.slug));
+    if (!postDetail) {
+      return {
+        props: { error: "error" },
+      };
+    }
+    return {
+      props: {
+        postDetail,
+      },
+    };
+  } catch (error) {
+    return { props: { error: "error" } };
+  }
+}
